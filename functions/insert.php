@@ -30,69 +30,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $stmt_questions = mysqli_prepare($conn, $sql_questions);
     $stmt_evaluation = mysqli_prepare($conn, $sql_evaluation);
 
-    if ($stmt_author && $stmt_event && $stmt_questionset && $stmt_evaluation) 
-    {
+    if ($stmt_author && $stmt_event && $stmt_questionset && $stmt_evaluation) {
         // Insert author
         mysqli_stmt_bind_param($stmt_author, "s", $author_name);
-        
-
-        if (mysqli_stmt_execute($stmt_author)) 
-        {
-            // Insert school_event
+    
+        if (mysqli_stmt_execute($stmt_author)) {
+            // If author insertion is successful, get the author_id
+            $author_id = mysqli_insert_id($conn);
+    
+            // Insert event
             mysqli_stmt_bind_param($stmt_event, "ss", $event_name, $date_created);
-            
-            // After inserting into school_event, get the event_id
-            if (mysqli_stmt_execute($stmt_event)) 
-            {
-                // Get the event_id of the inserted school_event
+    
+            if (mysqli_stmt_execute($stmt_event)) {
                 $event_id = mysqli_insert_id($conn);
-
-                // Insert questionset with the associated event_id
-                mysqli_stmt_bind_param($stmt_questionset, "s", $event_id); // Use $event_id instead of $event_name
-
+    
+                // Insert questionset
+                mysqli_stmt_bind_param($stmt_questionset, "s", $event_id);
+    
                 if (mysqli_stmt_execute($stmt_questionset)) {
-                    $questionSetId = mysqli_insert_id($conn);
-
-                    foreach($questions as $question)
-                    {
-                        mysqli_stmt_bind_param($stmt_questions, "is", $questionSetId, $question);
+                    $question_set_id = mysqli_insert_id($conn);
+    
+                    // Insert questions
+                    foreach ($questions as $question) {
+                        mysqli_stmt_bind_param($stmt_questions, "is", $question_set_id, $question);
                         mysqli_stmt_execute($stmt_questions);
                     }
-
+    
                     echo "<h3>Data stored in the database successfully.</h3>";
                     echo nl2br("\nAuthor Name: $author_name
                                 \nEvent Name: $event_name
                                 \nDate Created: $date_created
-                                \nQuestion Set ID: $questionSetId");
-                } 
-
-                else 
-                {
+                                \nQuestion Set ID: $question_set_id
+                                \n");
+    
+                    // Insert evaluation
+                    mysqli_stmt_bind_param($stmt_evaluation, "iii", $author_id, $event_id, $question_set_id);
+    
+                    if (mysqli_stmt_execute($stmt_evaluation)) {
+                        $evaluation_id = mysqli_insert_id($conn);
+                        echo "\nEvaluation ID: $evaluation_id";
+                    } else {
+                        echo "Error Inserting Evaluation: " . mysqli_error($conn);
+                    }
+                } else {
                     echo "Error inserting questionset: " . mysqli_error($conn);
                 }
-            } 
-
-            else 
-            {
+            } else {
                 echo "Error inserting school_event: " . mysqli_error($conn);
             }
-
-        } 
-        else 
-        {
+    
+        } else {
             echo "Error inserting author: " . mysqli_error($conn);
         }
-
+    
+        // Close statements
         mysqli_stmt_close($stmt_author);
         mysqli_stmt_close($stmt_event);
         mysqli_stmt_close($stmt_questionset);
         mysqli_stmt_close($stmt_questions);
-    } 
-
-    else 
-    {
-        echo "Error: " . mysqli_error($conn);
+        mysqli_stmt_close($stmt_evaluation);
+    } else {
+        echo "Error Preparing Statements: " . mysqli_error($conn);
     }
+    
 }
 
 mysqli_close($conn);

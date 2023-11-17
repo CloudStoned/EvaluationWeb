@@ -1,18 +1,16 @@
+<?php require ('./insert.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Dynamic Question Form</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <style>
-        .question-input {
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
 <body>
-
+    
     <form method="post" action="insert.php">
         <label for="author_name">Author Name:</label>
         <input type="text" name="author_name" required><br>
@@ -65,6 +63,7 @@
             }
         });
     </script>
+
 
 </body>
 </html>
