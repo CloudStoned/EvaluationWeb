@@ -1,4 +1,7 @@
-<?php require ('./insert.php'); ?>
+<?php
+    require 'functions/insert_data.php';
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +14,7 @@
 </head>
 <body>
     
-    <form method="post" action="insert.php">
+    <form method="post" action="functions/insert_data.php">
         <label for="author_name">Author Name:</label>
         <input type="text" name="author_name" required><br>
 
@@ -33,7 +36,7 @@
 
         <input type="submit" value="Submit">
     </form>
-
+    
     <script>
         $(document).ready(function () {
             // Add question input field
@@ -63,7 +66,6 @@
             }
         });
     </script>
-
 
 </body>
 </html>
