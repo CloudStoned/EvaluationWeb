@@ -61,7 +61,6 @@ if (isset($_GET['eval_id'])) {
         die("Query Error: " . mysqli_error($conn));
     }
 } else {
-    // Handle the case where eval_id is not set in the URL
     echo "Error: eval_id not specified.";
 }
 ?>
