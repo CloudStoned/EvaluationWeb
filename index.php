@@ -13,8 +13,8 @@
         <a class="navbar-brand mr-4" href="#">Admin</a>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav">
-              <a class="nav-item nav-link" href="create_eval.php">Create Eval</a>
-              <a class="nav-item nav-link" href="evaluation.php">Answer Eval</a>
+              <a class="nav-item nav-link" href="eval_create.php">Create Eval</a>
+              <a class="nav-item nav-link" href="eval_list.php">Answer Eval</a>
           </div>
         </div>
       </div>
