@@ -35,6 +35,8 @@
         <button type="button" id="add-question">Add Question</button>
 
         <input type="submit" value="Submit">
+        <a href="index.php" class="go-back-button">Go Back</a>
+
     </form>
     
     <script>

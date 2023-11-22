@@ -1,5 +1,5 @@
 <?php
-require '../database/database.php';
+require 'database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } 
 
-    // Redirect or display success message
     echo 'SUCCESS NAYS ONE';
 } else {
     echo "Invalid request.";

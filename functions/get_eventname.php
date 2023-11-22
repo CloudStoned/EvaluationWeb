@@ -1,5 +1,5 @@
 <?php 
-require 'database/database.php';
+require 'database.php';
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());

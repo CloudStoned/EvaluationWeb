@@ -23,7 +23,6 @@ require 'functions/get_eventname.php';
         </thead>
         <tbody>
             <?php 
-            // Ensure $sql_query is defined and contains the result set
             while ($results = mysqli_fetch_array($sql_query)) {
             ?>
                 <tr>
@@ -32,7 +31,7 @@ require 'functions/get_eventname.php';
                     <td><?php echo $results['event_name'] ?></td>
                     <td><?php echo $results['date_created'] ?></td>
                     <td>
-                        <a href="eval_questions.php?eval_id=<?php echo $results['eval_id']; ?>">Answer Evaluation</a>
+                        <a href="eval_stats.php?eval_id=<?php echo $results['eval_id']; ?>">View Stats</a>
                     </td>
                 </tr>
             <?php

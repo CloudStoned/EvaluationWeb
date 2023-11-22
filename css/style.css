@@ -17,3 +17,17 @@ th, td {
 h3 {
     color: navy;
 }
+
+.go-back-button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.go-back-button:hover {
+    background-color: #2980b9;
+}

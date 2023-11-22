@@ -15,6 +15,7 @@
           <div class="navbar-nav">
               <a class="nav-item nav-link" href="eval_create.php">Create Eval</a>
               <a class="nav-item nav-link" href="eval_list.php">Answer Eval</a>
+              <a class="nav-item nav-link" href="eval_stats_list.php">Statistical Report</a>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ if (isset($_GET['eval_id'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer Evaluation Questions</title>
@@ -53,6 +54,7 @@ if (isset($_GET['eval_id'])) {
             </tbody>
         </table>
         <input type="submit" value="Submit Answer">
+        <a href="eval_list.php" class="go-back-button">Go Back</a>
     </form>
 </body>
 </html>

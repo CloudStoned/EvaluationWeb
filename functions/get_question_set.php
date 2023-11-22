@@ -1,5 +1,5 @@
 <?php
-require 'database/database.php';
+require 'database.php';
 
 
 if (isset($_GET['eval_id'])) {
