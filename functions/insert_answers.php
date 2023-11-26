@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success Page</title>
-</head>
-<body>
-
 <?php
 require 'database.php';
 
+// Start the session
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if(isset($_SESSION['userDetails'])) {
+        // Retrieve user details
+        $userDetails = $_SESSION['userDetails'];
+        $user_id = $userDetails['user_id']; 
+    } 
+    else {
+        header("Location: evaluation.php");
+        exit();
+    }
 
     $eval_id = $_POST['eval_id'];
 
@@ -22,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $answer_value = $value;
 
-            $insert_query = "INSERT INTO answers (eval_id, question_id, answer_value, date_answered) 
-                             VALUES ($eval_id, $question_id, $answer_value, '$date_answered')";
+            $insert_query = "INSERT INTO answers (eval_id, user_id, question_id, answer_value, date_answered) 
+                             VALUES ($eval_id, $user_id, $question_id, $answer_value, '$date_answered')";
 
             $insert_result = mysqli_query($conn, $insert_query);
 
@@ -33,14 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 ?>
-    <a href="../Users/index.php" class="go-back-button">Go Back</a>
+    <a href="../Users/evaluation.php" class="go-back-button">Go Back</a>
 <?php
 } else {
     echo "Invalid request.";
 }
 ?>
-
-<h2>Answer Success</h2>
-
-</body>
-</html>

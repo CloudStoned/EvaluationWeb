@@ -1,50 +1,73 @@
 <?php
-require '../functions/get_eventname.php';
+    require '../functions/user_read.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluations</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Login Page</title>
 </head>
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+    }
+    .main {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 5px; 
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            display: grid;
+            justify-items: center;
+        }
+
+
+</style>
+
 <body>
-    <center>
-        <h2>Evaluation</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Eval ID</th>
-                    <th>Author</th>
-                    <th>Event Name</th>
-                    <th>Date Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                // Ensure $sql_query is defined and contains the result set
-                while ($results = mysqli_fetch_array($sql_query)) {
-                ?>
-                    <tr>
-                        <td><?php echo $results['eval_id'] ?></td>
-                        <td><?php echo $results['author_name'] ?></td>
-                        <td><?php echo $results['event_name'] ?></td>
-                        <td><?php echo $results['date_created'] ?></td>
-                        <td>
-                            <a href="../functions/eval_questions.php?eval_id=<?php echo $results['eval_id']; ?>">Answer Evaluation</a>
-                        </td>   
-                    </tr>
-                <?php
-                }
-                
-                if (mysqli_num_rows($sql_query) === 0) {
-                    echo '<tr><td colspan="4">No evaluations found</td></tr>';
-                }
-                ?>
-            </tbody>
-        </table>
-    </center>
+<div class="main">
+        <div class="form-container">
+            <h1 class="create-main">LogIn</h1>
+            <form class="form-horizontal" action="../functions/user_login.php" method="post"> 
+            <div class="form-group">
+                <label class="control-label col-sm-1 col-xs-1" for="studentNo">StudentNo</label>
+                <div class="col-sm-11 col-xs-11">
+                    <input type="text" class="form-control" name="studentNo" id="studentNo" placeholder="Enter Your StudentNo" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-1" for="password">Password</label>
+                <div class="col-sm-11">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter Your Password" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-primary" name="login" value="LOGIN" />
+                </div>
+            </div>
+            
+            </form>
+        </div>
+        <div class="form-container">
+            <form class="form-horizontal" action="create_user.php" method="post">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="submit" class="btn btn-primary" name="create" value="Create Account" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
