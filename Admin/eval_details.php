@@ -12,7 +12,7 @@ require '../functions/get_eventname.php';
     <title>Evaluations</title>
 </head>
 <body>
-    <h2>Evaluation</h2>
+    <h2>Evaluation Details</h2>
     <table class="table table-striped">
         <thead>
             <tr>

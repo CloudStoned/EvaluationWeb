@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav">
               <a class="nav-item nav-link" href="eval_create.php">Create Eval</a>
-              <a class="nav-item nav-link" href="eval_list.php">Evaluation List</a>
+              <a class="nav-item nav-link" href="eval_details.php">Evaluation Details</a>
               <a class="nav-item nav-link" href="eval_stats_list.php">Statistical Report</a>
               <p><a href="../Users/logout.php">Logout</a></p>
           </div>
