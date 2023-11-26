@@ -1,5 +1,5 @@
 <?php
-    require '../functions/user_read.php';
+    require 'functions/user_read.php';
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +36,7 @@
 <div class="main">
         <div class="form-container">
             <h1 class="create-main">LogIn</h1>
-            <form class="form-horizontal" action="../functions/user_login.php" method="post"> 
+            <form class="form-horizontal" action="functions/user_login.php" method="post"> 
             <div class="form-group">
                 <label class="control-label col-sm-1 col-xs-1" for="studentNo">StudentNo</label>
                 <div class="col-sm-11 col-xs-11">
@@ -59,7 +59,7 @@
         </div>
         <div class="form-container">
 
-            <form class="form-horizontal" action="create_user.php" method="post">
+            <form class="form-horizontal" action="Users/create_user.php" method="post">
                 <div class="form-group">
                     <div class="col-sm-10">
                         <input type="submit" class="btn btn-primary" name="create" value="Create Account" />
