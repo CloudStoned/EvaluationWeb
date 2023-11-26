@@ -1,16 +1,19 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "evaluation_admin";
+require 'functions/database.php';
+require 'lib/CalculateMean.php';
+require 'lib/CalculateMode.php';
+require 'lib/CalculateMedian.php';
+require 'lib/CalculateVariance.php';
+require 'lib/Responses.php'; 
+require 'lib/CalculateStandardDev.php'; // Include the CalculateStandardDev class
 
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
+$calculateMean = new CalculateMean($conn);
+$calculateMode = new CalculateMode($conn);
+$calculateMedian = new CalculateMedian($conn);
+$countResponses = new Responses($conn);
+$calculateVariance = new CalculateVariance($conn, $countResponses);
+$calculateStandardDev = new CalculateStandardDev($conn, $calculateVariance);
 
 $query = "SELECT DISTINCT question_id FROM answers";
 $result = mysqli_query($conn, $query);
@@ -19,42 +22,30 @@ if (!$result) {
     die("Error: " . mysqli_error($conn));
 }
 
-
 while ($row = mysqli_fetch_assoc($result)) {
+    echo "<br>";
     $questionId = $row['question_id'];
 
-    $countQuery = "SELECT answer_value, COUNT(*) AS answerCount FROM answers WHERE question_id = ? GROUP BY answer_value";
-    $stmt = mysqli_prepare($conn, $countQuery);
-    mysqli_stmt_bind_param($stmt, "i", $questionId);
-    mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_bind_result($stmt, $answerValue, $answerCount);
-
     echo "Question ID $questionId:<br>";
-    $sum = 0;
-    $totalResponses = 0;
 
-    while (mysqli_stmt_fetch($stmt)) {
-        echo "Rating $answerValue:  $answerCount times.<br>";
-        $sum += $answerCount;
-        $totalResponses += $answerCount;
-    }
+    $responseCount = $countResponses->CountResponsesForQuestion($questionId);
+    echo "No. of Responses: $responseCount<br>";
 
-    if ($totalResponses > 0) {
-        $mean = (float)($sum / $totalResponses);
-    } else {
-        $mean = 0.00;
-    }
-    
-    echo "Total Responses: $totalResponses<br>";
-    $mean = $totalResponses > 0 ? (float)($sum / 5) : 0.00;
-    echo "Mean: $mean<br>";
-    
+    $mean = $calculateMean->calculateMeanForQuestion($questionId);
+    echo "Mean: " . number_format($mean, 4) . "<br>";
 
+    $mode = $calculateMode->calculateModeForQuestion($questionId);
+    echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
 
-    mysqli_stmt_close($stmt);
+    $median = $calculateMedian->calculateMedianForQuestion($questionId);
+    echo "Median: " . ($median !== null ? number_format($median, 2) : "No values") . "<br>";
+
+    $variance = $calculateVariance->calculateVarianceForQuestion($questionId);
+    echo "Variance: " . number_format($variance, 4) . "<br>";
+
+    $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($questionId);
+    echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
 }
-
 
 mysqli_close($conn);
 
