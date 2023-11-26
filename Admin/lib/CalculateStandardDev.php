@@ -1,5 +1,5 @@
 <?php
-require 'functions/database.php';
+require '../functions/database.php';
 
 class CalculateStandardDev
 {

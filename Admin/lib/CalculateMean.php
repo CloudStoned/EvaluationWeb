@@ -1,6 +1,6 @@
 <?php
 
-require 'functions/database.php';
+require '../functions/database.php';
 
 class CalculateMean
 {
@@ -42,7 +42,6 @@ class CalculateMean
 
         return $mean;
     }
-
 }
 
 ?>

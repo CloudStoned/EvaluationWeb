@@ -1,10 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Page</title>
+</head>
+<body>
+
 <?php
 require 'database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $eval_id = $_POST['eval_id'];
-
 
     $date_answered = date("Y-m-d");
 
@@ -23,10 +31,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 die("Insert Error: " . mysqli_error($conn));
             }
         }
-    } 
-
-    echo 'SUCCESS NAYS ONE';
+    }
+?>
+    <a href="../Users/index.php" class="go-back-button">Go Back</a>
+<?php
 } else {
     echo "Invalid request.";
 }
 ?>
+
+<h2>Answer Success</h2>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 <?php
-    require 'functions/insert_data.php';
+    require '../functions/insert_data.php';
 ?>
 
 
@@ -13,8 +13,8 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-    
-    <form method="post" action="functions/insert_data.php">
+    <center>
+    <form method="post" action="../functions/insert_data.php">
         <label for="author_name">Author Name:</label>
         <input type="text" name="author_name" required><br>
 
@@ -34,6 +34,8 @@
 
         <button type="button" id="add-question">Add Question</button>
 
+        <br>
+        <br>
         <input type="submit" value="Submit">
         <a href="index.php" class="go-back-button">Go Back</a>
 
@@ -68,6 +70,8 @@
             }
         });
     </script>
+    </center>
+   
 
 </body>
 </html>

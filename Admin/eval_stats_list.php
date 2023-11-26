@@ -1,5 +1,6 @@
 <?php
-require 'functions/get_eventname.php';
+require '../functions/get_eventname.php';
+
 ?>
 
 <!DOCTYPE html>

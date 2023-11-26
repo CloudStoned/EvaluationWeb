@@ -7,14 +7,14 @@
 </head>
 
 <body>
+  <center>
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container">
-        <a class="navbar-brand mr-4" href="#">Admin</a>
+        <h1> Admin Page</h1>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav">
               <a class="nav-item nav-link" href="eval_create.php">Create Eval</a>
-              <a class="nav-item nav-link" href="eval_list.php">Answer Eval</a>
               <a class="nav-item nav-link" href="eval_stats_list.php">Statistical Report</a>
           </div>
         </div>
@@ -25,10 +25,11 @@
   <main role="main" class="container">
     <div class="row">
       <div class="col-md-8">
-
       </div>
     </div>
   </main>
+  </center>
+
 
 </body>
 

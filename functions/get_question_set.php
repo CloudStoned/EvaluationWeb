@@ -13,12 +13,9 @@ if (isset($_GET['eval_id'])) {
         $question_set = mysqli_fetch_assoc($question_set_query);
         $question_set_id = $question_set['question_set_id'];
 
-        echo $question_set_id;
-
-    } else {
+    } 
+    else {
         die("Query Error: " . mysqli_error($conn));
     }
-
-    echo "Error: eval_id not specified.";
 }
 ?>

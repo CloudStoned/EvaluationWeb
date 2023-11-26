@@ -1,7 +1,6 @@
 <?php
-require 'functions/get_question_set.php';
+require '../functions/get_question_set.php';
 
-// Check if eval_id is set in the URL
 if (isset($_GET['eval_id'])) {
     $eval_id = $_GET['eval_id'];
 
@@ -19,7 +18,8 @@ if (isset($_GET['eval_id'])) {
 </head>
 
 <body>
-    <form method="post" action="functions/insert_answers.php">
+    <center>
+    <form method="post" action="insert_answers.php">
         <input type="hidden" name="eval_id" value="<?= $eval_id; ?>">
 
         <h3>1 is the lowest, 5 is the highest</h3>
@@ -54,15 +54,19 @@ if (isset($_GET['eval_id'])) {
             </tbody>
         </table>
         <input type="submit" value="Submit Answer">
-        <a href="eval_list.php" class="go-back-button">Go Back</a>
+        <a href="../Users/index.php" class="go-back-button">Go Back</a>
     </form>
+    </center>
+   
 </body>
 </html>
+
 <?php
     } else {
         die("Query Error: " . mysqli_error($conn));
     }
-} else {
+} 
+else {
     echo "Error: eval_id not specified.";
 }
 ?>
