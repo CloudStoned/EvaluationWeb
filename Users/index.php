@@ -30,8 +30,6 @@
             display: grid;
             justify-items: center;
         }
-
-
 </style>
 
 <body>
