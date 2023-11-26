@@ -14,9 +14,10 @@ if (isset($_POST['create'])) {
     if (mysqli_num_rows($checkResult) > 0) {
         echo '<script>alert("StudentNo already exists! Please choose a different one.")</script>';
         echo '<script>window.location.href = "../Users/create_user.php"</script>';
-    } else {
+    } 
+    else {
         // Insert new user with specified columns
-        $queryCreate = "INSERT INTO users (`studentNo`, `name`, `course`, `year`, `password`) VALUES ('$studentNo', '$name', '$course', '$year', '$password')";
+        $queryCreate = "INSERT INTO students (`studentNo`, `name`, `course`, `year`, `password`) VALUES ('$studentNo', '$name', '$course', '$year', '$password')";
         $sqlCreate = mysqli_query($conn, $queryCreate);
 
         if ($sqlCreate) {

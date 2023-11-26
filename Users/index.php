@@ -58,6 +58,7 @@
             </form>
         </div>
         <div class="form-container">
+
             <form class="form-horizontal" action="create_user.php" method="post">
                 <div class="form-group">
                     <div class="col-sm-10">
@@ -65,7 +66,20 @@
                     </div>
                 </div>
             </form>
+
+            <form class="form-horizontal" action="create_admin.php" method="post">
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input type="submit" class="btn btn-primary" name="create" value="Create Admin Account" />
+                    </div>
+                </div>
+            </form>
         </div>
+
+
+
+
+        
     </div>
 </body>
 </html>

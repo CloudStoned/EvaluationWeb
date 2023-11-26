@@ -5,19 +5,25 @@ if(isset($_POST['login'])) {
     $studentNo = $_POST['studentNo'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM users WHERE studentNo = '$studentNo' AND password = '$password'";
-    $result = $conn->query($query);
+    $queryStudent = "SELECT * FROM students WHERE studentNo = '$studentNo' AND password = '$password'";
+    $queryAdmin = "SELECT * FROM admins WHERE username = '$studentNo' AND password = '$password'";
+    
+    $resultStudent = $conn->query($queryStudent);
+    $resultAdmin = $conn->query($queryAdmin);
 
-    if ($result && $result->num_rows > 0) {
-        $userDetails = $result->fetch_assoc();
+    if ($resultStudent && $resultStudent->num_rows > 0) {
+        $userDetails = $resultStudent->fetch_assoc();
 
         session_start();
         $_SESSION['userDetails'] = $userDetails;
 
         header("Location: ../Users/evaluation.php");
         exit(); 
-    } 
-    else {
+    } elseif ($resultAdmin && $resultAdmin->num_rows > 0) {
+        // Admin login
+        header("Location: ../Admin/index.php");
+        exit();
+    } else {
         echo "Invalid credentials. Please try again.";
     }
 }

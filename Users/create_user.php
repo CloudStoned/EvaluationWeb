@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>PHP Crud Tuts</title>
+    <title>Create Student Account</title>
 </head>
 
 <style>
@@ -64,7 +64,7 @@
 
 <body>
 <div class="main">
-    <h1 class="create-main">CREATE USER</h1>
+    <h1 class="create-main">Create Student Account</h1>
     <form class="form-horizontal" action="../functions/user_create.php" method="post">
 
     <div class="form-group">
@@ -106,7 +106,8 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <input type="submit" class="btn btn-primary" name="create" value="CREATE" />
             </div>
-        </div>
+            <a href="../Users/index.php" class="go-back-button">Go Back</a>
+    </div>
     </form>
 
 </div>

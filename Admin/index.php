@@ -16,6 +16,7 @@
           <div class="navbar-nav">
               <a class="nav-item nav-link" href="eval_create.php">Create Eval</a>
               <a class="nav-item nav-link" href="eval_stats_list.php">Statistical Report</a>
+              <p><a href="../Users/logout.php">Logout</a></p>
           </div>
         </div>
       </div>
