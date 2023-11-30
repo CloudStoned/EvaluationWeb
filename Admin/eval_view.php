@@ -22,37 +22,24 @@ if (isset($_GET['eval_id'])) {
     <center>
         <form method="post" action="insert_answers.php" onsubmit="return validateForm()">
             <input type="hidden" name="eval_id" value="<?= $eval_id; ?>">
-
-            <h3>1 is the lowest, 5 is the highest</h3>
-
             <table>
                 <thead>
                     <tr>
                         <th>Question ID</th>
                         <th>Question Text</th>
-                        <th>Answer</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     while ($question = mysqli_fetch_assoc($question_set_query)) {
                         echo '<tr>';
+                        echo '<td>' . $question['question_id'] . '</td>';
                         echo '<td>' . $question['question'] . '</td>';
-                        echo '<td>';
-
-                        for ($i = 1; $i <= 5; $i++) {
-                            echo '<label> 
-                                    <input type="radio" name="answer_' . $question['question_id'] . '" value="' . $i . '">' . $i . 
-                                '</label>';
-                        }
-                        echo '</td>';
-                        echo '</tr>';
                     }
                     ?>
                 </tbody>
             </table>
-            <input type="submit" value="Submit Answer">
-            <a href="../Users/evaluation.php" class="go-back-button">Go Back</a>
+            <a href="../Admin/eval_details.php" class="go-back-button">Go Back</a>
         </form>
     </center>
 </body>

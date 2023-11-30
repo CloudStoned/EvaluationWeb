@@ -7,8 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../js/validation.js"></script>
     <title>Create Student Account</title>
 </head>
 
@@ -65,40 +66,40 @@
 <body>
 <div class="main">
     <h1 class="create-main">Create Student Account</h1>
-    <form class="form-horizontal" action="../functions/user_create.php" method="post">
+    <form class="form-horizontal" action="../functions/user_create.php" method="post" onsubmit="return validateStudentNo();">
 
     <div class="form-group">
         <label class="control-label col-sm-1 col-xs-1" for="studentNo">StudentNo</label>
         <div class="col-sm-11 col-xs-11">
-            <input type="text" class="form-control" name="studentNo" id="studentNo" placeholder="Enter Your StudentNo" required />
+            <input type="text" class="form-control" name="studentNo" id="studentNo" placeholder="ex: s2021****" required />
         </div>
     </div>
    
     <div class="form-group">
         <label class="control-label col-sm-1 col-xs-1" for="name">Name</label>
         <div class="col-sm-11 col-xs-11">
-            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Your Name" required />
+            <input type="text" class="form-control" name="name" id="name" placeholder="ex: Dela Cruz, Juan" required />
         </div>
     </div>
 
     <div class="form-group">
         <label class="control-label col-sm-1 col-xs-1" for="course">Course</label>
         <div class="col-sm-11 col-xs-11">
-            <input type="text" class="form-control" name="course" id="name" placeholder="Enter Your Course" required />
+            <input type="text" class="form-control" name="course" id="name" placeholder="ex: BSCS" required />
         </div>
     </div>
 
     <div class="form-group">
         <label class="control-label col-sm-1 col-xs-1" for="year">Year</label>
         <div class="col-sm-11 col-xs-11">
-            <input type="text" class="form-control" name="year" id="year" placeholder="Enter Your Year" required />
+            <input type="number" class="form-control" name="year" id="year" placeholder="ex: 3" required />
         </div>
     </div>
 
     <div class="form-group">
         <label class="control-label col-sm-1" for="password">Password</label>
         <div class="col-sm-11">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Enter Your Password" required />
+            <input type="password" class="form-control" name="password" id="password" placeholder="*****" required />
         </div>
     </div>
 
@@ -106,11 +107,12 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <input type="submit" class="btn btn-primary" name="create" value="CREATE" />
             </div>
-            <a href="../Users/index.php" class="go-back-button">Go Back</a>
+            <a href="../index.html" class="go-back-button">Go Back</a>
     </div>
     </form>
 
 </div>
+
 </body>
 </html>
 

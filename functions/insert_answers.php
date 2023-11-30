@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_SESSION['userDetails'])) {
         // Retrieve user details
         $userDetails = $_SESSION['userDetails'];
-        $user_id = $userDetails['user_id']; 
+        $student_id = $userDetails['student_id']; 
     } 
     else {
         header("Location: evaluation.php");
@@ -26,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $answer_value = $value;
 
-            $insert_query = "INSERT INTO answers (eval_id, user_id, question_id, answer_value, date_answered) 
-                             VALUES ($eval_id, $user_id, $question_id, $answer_value, '$date_answered')";
+            $insert_query = "INSERT INTO answers (eval_id, student_id, question_id, answer_value, date_answered) 
+                             VALUES ($eval_id, $student_id, $question_id, $answer_value, '$date_answered')";
 
             $insert_result = mysqli_query($conn, $insert_query);
 

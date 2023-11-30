@@ -84,7 +84,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-primary" name="create" value="CREATE" />
                 </div>
-                <a href="../Users/index.php" class="go-back-button">Go Back</a>
+                <a href="../index.html" class="go-back-button">Go Back</a>
             </div>
         </form>
     </div>

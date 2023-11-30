@@ -47,7 +47,7 @@
     
             $responseCount = $countResponses->CountResponsesForQuestion($questionId);
             echo "No. of Responses: $responseCount<br>";
-    
+            
             $mean = $calculateMean->calculateMeanForQuestion($questionId);
             echo "Mean: " . number_format($mean, 4) . "<br>";
     

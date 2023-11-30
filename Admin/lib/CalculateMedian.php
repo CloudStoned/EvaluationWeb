@@ -17,7 +17,7 @@ class CalculateMedian
         $stmt = mysqli_prepare($this->conn, $selectQuery);
         mysqli_stmt_bind_param($stmt, "i", $questionId);
         mysqli_stmt_execute($stmt);
-
+                                    
         mysqli_stmt_bind_result($stmt, $answerValue);
 
         $values = [];

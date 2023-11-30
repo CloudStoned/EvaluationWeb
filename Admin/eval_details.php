@@ -34,6 +34,9 @@ require '../functions/get_eventname.php';
                     <td>
                         <a href="eval_remove.php?eval_id=<?php echo $results['eval_id']; ?>" onclick="return confirm('Are you sure you want to remove this evaluation?')">Remove</a>
                     </td>
+                    <td>
+                        <a href="eval_view.php?eval_id=<?php echo $results['eval_id']; ?>">View Questions</a>
+                    </td>
                 </tr>
             <?php
             }
