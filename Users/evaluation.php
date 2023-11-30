@@ -32,7 +32,6 @@ else {
             <thead>
                 <tr>
                     <th>Eval ID</th>
-                    <th>Author</th>
                     <th>Event Name</th>
                     <th>Date Created</th>
                 </tr>
@@ -43,7 +42,6 @@ else {
                 ?>
                     <tr>
                         <td><?php echo $results['eval_id'] ?></td>
-                        <td><?php echo $results['author_name'] ?></td>
                         <td><?php echo $results['event_name'] ?></td>
                         <td><?php echo $results['date_created'] ?></td>
                         <td>

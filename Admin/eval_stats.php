@@ -46,12 +46,15 @@
 
         $respondents = $countRespondents->GetRespondentsForCourses($eval_id);
         echo '<center>
-                <h2> Respondents per Course: </h2>';
+                <h2> Total Respondents per Course: </h2>';
         foreach ($respondents as $row) {
             echo '<p>' . $row["course"] . ': ' . $row["student_count"] . '</p>';
         }
         echo '</center>';
-    
+
+        $responsesForeachQuestion = $countResponses->GetRatingsForEachQuestion($eval_id);
+        echo $responsesForeachQuestion;
+
         $counter = 1; 
 
         mysqli_data_seek($result, 0);
@@ -67,7 +70,7 @@
             } else {
                 echo "$counter)  Question details not found. <br>";
             }
-    
+            
             $mean = $calculateMean->calculateMeanForQuestion($questionId);
             echo "Mean: " . number_format($mean, 4) . "<br>";
     

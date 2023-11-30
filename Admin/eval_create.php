@@ -15,8 +15,6 @@
 <body>
     <center>
     <form method="post" action="../functions/insert_data.php">
-        <label for="author_name">Author Name:</label>
-        <input type="text" name="author_name" required><br>
 
         <label for="event_name">Event Name:</label>
         <input type="text" name="event_name" required><br>
