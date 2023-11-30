@@ -17,6 +17,7 @@
     require 'lib/Responses.php'; 
     require 'lib/CalculateStandardDev.php'; 
     require 'lib/Respondents.php';
+    require 'lib/Questions.php';
     
     $calculateMean = new CalculateMean($conn);
     $calculateMode = new CalculateMode($conn);
@@ -25,6 +26,7 @@
     $countRespondents = new Respondents($conn);
     $calculateVariance = new CalculateVariance($conn, $countResponses);
     $calculateStandardDev = new CalculateStandardDev($conn, $calculateVariance);
+    $getQuestions = new Questions($conn);
   
     if (isset($_GET['eval_id'])) 
     {
@@ -57,8 +59,14 @@
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<br>";
             $questionId = $row['question_id'];
-    
-            echo "$counter) <br> Question ID $questionId:<br>"; 
+            
+            $questions = $getQuestions->GetQuestions($eval_id,$questionId);
+
+            if (!empty($questions)) {
+                echo "$counter)  Question: " . $questions[0] . "<br>";
+            } else {
+                echo "$counter)  Question details not found. <br>";
+            }
     
             $mean = $calculateMean->calculateMeanForQuestion($questionId);
             echo "Mean: " . number_format($mean, 4) . "<br>";

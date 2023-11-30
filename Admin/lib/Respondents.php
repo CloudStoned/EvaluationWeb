@@ -29,12 +29,5 @@ class Respondents
 
         return $result;
     }
-
-    public function GetRespondentsForQuestion($eval_id)
-    {
-        
-    }
-
-    
     
 }
