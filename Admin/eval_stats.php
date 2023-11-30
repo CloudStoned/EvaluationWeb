@@ -7,11 +7,8 @@
     <link rel="stylesheet" href="../Admin/css/style.css">
 </head>
 <body>
-    <center>
-        
-    </center>
-    <?php
 
+    <?php
     require '../functions/database.php';
     require 'lib/CalculateMean.php';
     require 'lib/CalculateMode.php';
@@ -19,25 +16,34 @@
     require 'lib/CalculateVariance.php';
     require 'lib/Responses.php'; 
     require 'lib/CalculateStandardDev.php'; 
-
+    
     $calculateMean = new CalculateMean($conn);
     $calculateMode = new CalculateMode($conn);
     $calculateMedian = new CalculateMedian($conn);
     $countResponses = new Responses($conn);
     $calculateVariance = new CalculateVariance($conn, $countResponses);
     $calculateStandardDev = new CalculateStandardDev($conn, $calculateVariance);
+  
     
     if (isset($_GET['eval_id'])) 
     {
         $eval_id = $_GET['eval_id'];
-    
+        
         $query = "SELECT DISTINCT question_id FROM answers WHERE eval_id = $eval_id";
         $result = mysqli_query($conn, $query);
-    
+        
         if (!$result) {
             die("Error: " . mysqli_error($conn));
         }
+
+        $totalResponses = $countResponses->CountTotalResponsesForEval($eval_id);
+        echo '<center>
+            <h2> Total number of responses: ' . $totalResponses . '</h2>
+        </center>';
+    
         $counter = 1; 
+
+        mysqli_data_seek($result, 0);
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<br>";
@@ -45,9 +51,6 @@
     
             echo "$counter) <br> Question ID $questionId:<br>"; 
     
-            $responseCount = $countResponses->CountResponsesForQuestion($questionId);
-            echo "No. of Responses: $responseCount<br>";
-            
             $mean = $calculateMean->calculateMeanForQuestion($questionId);
             echo "Mean: " . number_format($mean, 4) . "<br>";
     
@@ -66,8 +69,8 @@
             $counter++;  
         }
         ?>
-        <a href="eval_stats_list.php" class="go-back-button">Go Back</a>
-    <?php
+            <a href="eval_stats_list.php" class="go-back-button">Go Back</a>
+        <?php
         mysqli_close($conn);
         }
         else

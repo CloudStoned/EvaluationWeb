@@ -45,4 +45,27 @@ class Responses
 
         return $responses;
     }
+    
+    public function CountTotalResponsesForEval($eval_id)
+    {
+        $query = "SELECT COUNT(DISTINCT student_id) AS total_responses FROM answers WHERE eval_id = ?";
+        $stmt = mysqli_prepare($this->conn, $query);
+        mysqli_stmt_bind_param($stmt, "i", $eval_id);
+        mysqli_stmt_execute($stmt);
+    
+        $result = mysqli_stmt_get_result($stmt);
+    
+        if (!$result) {
+            die("Error: " . mysqli_error($this->conn));
+        }
+    
+        $row = mysqli_fetch_assoc($result);
+        $totalResponses = $row['total_responses'];
+    
+        mysqli_stmt_close($stmt);
+    
+        return $totalResponses;
+    }
+    
+    
 }
