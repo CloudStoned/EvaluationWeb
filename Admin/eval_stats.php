@@ -16,15 +16,16 @@
     require 'lib/CalculateVariance.php';
     require 'lib/Responses.php'; 
     require 'lib/CalculateStandardDev.php'; 
+    require 'lib/Respondents.php';
     
     $calculateMean = new CalculateMean($conn);
     $calculateMode = new CalculateMode($conn);
     $calculateMedian = new CalculateMedian($conn);
     $countResponses = new Responses($conn);
+    $countRespondents = new Respondents($conn);
     $calculateVariance = new CalculateVariance($conn, $countResponses);
     $calculateStandardDev = new CalculateStandardDev($conn, $calculateVariance);
   
-    
     if (isset($_GET['eval_id'])) 
     {
         $eval_id = $_GET['eval_id'];
@@ -40,6 +41,14 @@
         echo '<center>
             <h2> Total number of responses: ' . $totalResponses . '</h2>
         </center>';
+
+        $respondents = $countRespondents->GetRespondentsForCourses($eval_id);
+        echo '<center>
+                <h2> Respondents per Course: </h2>';
+        foreach ($respondents as $row) {
+            echo '<p>' . $row["course"] . ': ' . $row["student_count"] . '</p>';
+        }
+        echo '</center>';
     
         $counter = 1; 
 
