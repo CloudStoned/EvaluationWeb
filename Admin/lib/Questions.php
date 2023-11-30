@@ -44,6 +44,19 @@ class Questions
 
         return $questions;
     }
+    
+    public function GetQuestionsForDropDown($eval_id)
+    {
+        $question_set_query = mysqli_query($this->conn, "SELECT question_id, question FROM questions WHERE question_set_fk = $eval_id");
+    
+        if (!$question_set_query) {
+            die("Error: " . mysqli_error($this->conn));
+        }
+    
+        return $question_set_query;
+    }
+    
+    
 
 }
 

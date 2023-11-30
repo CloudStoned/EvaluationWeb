@@ -18,6 +18,7 @@
     require 'lib/CalculateStandardDev.php'; 
     require 'lib/Respondents.php';
     require 'lib/Questions.php';
+    require 'lib/Ratings.php';
     
     $calculateMean = new CalculateMean($conn);
     $calculateMode = new CalculateMode($conn);
@@ -27,6 +28,7 @@
     $calculateVariance = new CalculateVariance($conn, $countResponses);
     $calculateStandardDev = new CalculateStandardDev($conn, $calculateVariance);
     $getQuestions = new Questions($conn);
+    $getRatings = new Ratings($conn);
   
     if (isset($_GET['eval_id'])) 
     {
@@ -52,18 +54,49 @@
         }
         echo '</center>';
 
-        $responsesForeachQuestion = $countResponses->GetRatingsForEachQuestion($eval_id);
-        echo $responsesForeachQuestion;
 
+        if (isset($_POST['question_id'])) {
+            $questionId = $_POST['question_id'];
+        } else {
+            $questionId = 1;
+        }
+        ?>
+
+        <div class="dropDownList">
+            <form method="post" action="">
+                <label for="questionDropdown">Select Question: </label>
+                <select id="questionDropdown" name="question_id" onchange="this.form.submit()">
+                    <?php
+                    $questionResult = $getQuestions->GetQuestionsForDropDown($eval_id);
+                    while ($row = mysqli_fetch_assoc($questionResult)) {
+                        $qid = $row['question_id'];
+                        $questionText = $row['question'];
+                        echo "<option value=\"$qid\"";
+                        if ($questionId == $qid) echo " selected";
+                        echo ">$questionText</option>";
+                    }
+                    ?>
+                </select>
+            </form>
+        </div>
+
+        
+        <?php
+            $responsesForeachQuestion = $getRatings->GetRatingsForEachQuestion($eval_id, $questionId);
+            echo $responsesForeachQuestion;
+        ?>
+        
+        
+        <?php
         $counter = 1; 
 
         mysqli_data_seek($result, 0);
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<br>";
-            $questionId = $row['question_id'];
+            $currentQuestionId = $row['question_id'];
             
-            $questions = $getQuestions->GetQuestions($eval_id,$questionId);
+            $questions = $getQuestions->GetQuestions($eval_id, $currentQuestionId);
 
             if (!empty($questions)) {
                 echo "$counter)  Question: " . $questions[0] . "<br>";
@@ -71,23 +104,24 @@
                 echo "$counter)  Question details not found. <br>";
             }
             
-            $mean = $calculateMean->calculateMeanForQuestion($questionId);
+            $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
             echo "Mean: " . number_format($mean, 4) . "<br>";
-    
-            $mode = $calculateMode->calculateModeForQuestion($questionId);
+
+            $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
             echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
-    
-            $median = $calculateMedian->calculateMedianForQuestion($questionId);
+
+            $median = $calculateMedian->calculateMedianForQuestion($currentQuestionId);
             echo "Median: " . ($median !== null ? number_format($median, 2) : "No values") . "<br>";
-    
-            $variance = $calculateVariance->calculateVarianceForQuestion($questionId);
+
+            $variance = $calculateVariance->calculateVarianceForQuestion($currentQuestionId);
             echo "Variance: " . number_format($variance, 4) . "<br>";
-    
-            $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($questionId);
+
+            $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($currentQuestionId);
             echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
-    
+
             $counter++;  
         }
+
         ?>
             <a href="eval_stats_list.php" class="go-back-button">Go Back</a>
         <?php

@@ -31,3 +31,10 @@ h3 {
 .go-back-button:hover {
     background-color: #2980b9;
 }
+
+.dropDownList
+{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
