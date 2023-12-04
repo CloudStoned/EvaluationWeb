@@ -7,7 +7,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(isset($_SESSION['userDetails'])) {
-        // Retrieve user details
+
         $userDetails = $_SESSION['userDetails'];
         $student_id = $userDetails['student_id']; 
     } 
@@ -18,27 +18,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $eval_id = $_POST['eval_id'];
 
-    $date_answered = date("Y-m-d");
+    $check_query = "SELECT * FROM answers WHERE eval_id = $eval_id AND student_id = $student_id";
+    $check_result = mysqli_query($conn, $check_query);
 
-    foreach ($_POST as $key => $value) {
-        if (strpos($key, 'answer_') === 0) {
-            $question_id = str_replace('answer_', '', $key);
+    if (mysqli_num_rows($check_result) > 0) {
 
-            $answer_value = $value;
+        echo "You have already answered for this evaluation.";
 
-            $insert_query = "INSERT INTO answers (eval_id, student_id, question_id, answer_value, date_answered) 
-                             VALUES ($eval_id, $student_id, $question_id, $answer_value, '$date_answered')";
+    } else {
+        $date_answered = date("Y-m-d");
 
-            $insert_result = mysqli_query($conn, $insert_query);
+        foreach ($_POST as $key => $value) {
+            if (strpos($key, 'answer_') === 0) {
+                $question_id = str_replace('answer_', '', $key);
 
-            if (!$insert_result) {
-                die("Insert Error: " . mysqli_error($conn));
+                $answer_value = $value;
+
+                $insert_query = "INSERT INTO answers (eval_id, student_id, question_id, answer_value, date_answered) 
+                                 VALUES ($eval_id, $student_id, $question_id, $answer_value, '$date_answered')";
+
+                $insert_result = mysqli_query($conn, $insert_query);
+
+                if (!$insert_result) {
+                    die("Insert Error: " . mysqli_error($conn));
+                }
             }
         }
+
+        echo "Answers submitted successfully.";
     }
-?>
-    <a href="../Users/evaluation.php" class="go-back-button">Go Back</a>
-<?php
+
+    // Provide a link to go back
+    echo '<a href="../Users/evaluation.php" class="go-back-button">Go Back</a>';
 } else {
     echo "Invalid request.";
 }
