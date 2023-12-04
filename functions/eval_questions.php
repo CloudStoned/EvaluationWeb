@@ -19,9 +19,7 @@ if (isset($_GET['eval_id'])) {
 
     <script>
         function validateForm() {
-            var totalScore = <?= mysqli_num_rows($question_set_query) * 5; ?>;
             <?php
-                mysqli_data_seek($question_set_query, 0); 
                 while ($question = mysqli_fetch_assoc($question_set_query)) {
                     echo "
                         if (document.querySelector('input[name=\"answer_{$question['question_id']}\"]:checked') === null) {
