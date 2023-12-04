@@ -45,7 +45,6 @@ if (isset($_GET['eval_id'])) {
                     <tr>
                         <th>Question ID</th>
                         <th>Question Text</th>
-                        <th>Answer</th>
                     </tr>
                 </thead>
                 <tbody>
