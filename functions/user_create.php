@@ -16,7 +16,7 @@ if (isset($_POST['create'])) {
         echo '<script>window.location.href = "../Users/create_user.php"</script>';
     } 
     else {
-        $queryCreate = "INSERT INTO students (`studentNo`, `name`, `course`, `year`, `password`) VALUES ('$studentNo', '$name', '$course', '$year', '$password')";
+        $queryCreate = "INSERT INTO students (`studentNo`, `name`, `course`, `yearlevel`, `password`) VALUES ('$studentNo', '$name', '$course', '$year', '$password')";
         $sqlCreate = mysqli_query($conn, $queryCreate);
 
         if ($sqlCreate) {

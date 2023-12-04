@@ -8,6 +8,7 @@ if (isset($_GET['eval_id'])) {
 
     if ($question_set_query) {
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,22 @@ if (isset($_GET['eval_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer Evaluation Questions</title>
 
+    <script>
+        function validateForm() {
+            var totalScore = <?= mysqli_num_rows($question_set_query) * 5; ?>;
+            <?php
+                mysqli_data_seek($question_set_query, 0); 
+                while ($question = mysqli_fetch_assoc($question_set_query)) {
+                    echo "
+                        if (document.querySelector('input[name=\"answer_{$question['question_id']}\"]:checked') === null) {
+                            alert('Please answer all questions before submitting.');
+                            return false;
+                        }
+                    ";
+                }
+            ?>
+        }
+    </script>
 </head>
 
 <body>
@@ -35,6 +52,7 @@ if (isset($_GET['eval_id'])) {
                 </thead>
                 <tbody>
                     <?php
+                    mysqli_data_seek($question_set_query, 0); // Reset the result set pointer
                     while ($question = mysqli_fetch_assoc($question_set_query)) {
                         echo '<tr>';
                         echo '<td>' . $question['question'] . '</td>';

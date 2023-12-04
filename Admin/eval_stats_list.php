@@ -26,7 +26,7 @@ require '../functions/get_eventname.php';
                 <tr>
                     <td><?php echo $results['event_name'] ?></td>
                     <td>
-                        <a href="eval_stats.php?eval_id=<?php echo $results['eval_id']; ?>">View Stats</a>
+                        <a href="eval_stats.php?eval_id=<?php echo $results['eval_id']; ?>">View Stats</a> <!--PASS ALSO THE QUIESTIONSET ID -->
                     </td>
                 </tr>
             <?php

@@ -7,6 +7,7 @@
 </head>
 
 <body>
+  
   <center>
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
@@ -17,6 +18,7 @@
               <a class="nav-item nav-link" href="eval_create.php">Create Eval</a>
               <a class="nav-item nav-link" href="eval_details.php">Evaluation Details</a>
               <a class="nav-item nav-link" href="eval_stats_list.php">Statistical Report</a>  
+              <a class="nav-item nav-link" href="../Users/create_admin.php">Create Admin Account</a>  
               <p><a href="../Users/logout.php">Logout</a></p>
           </div>
         </div>

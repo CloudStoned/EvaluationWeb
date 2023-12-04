@@ -1,4 +1,3 @@
-// validation.js
 
 function validateStudentNo() {
     var studentNoInput = document.getElementById("studentNo");

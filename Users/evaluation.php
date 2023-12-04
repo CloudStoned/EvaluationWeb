@@ -23,7 +23,7 @@ else {
 <body>
     <p>Welcome, <?php echo $userDetails['name']; ?>!</p>
     <p>Your Student No is: <?php echo $userDetails['studentNo']; ?></p>
-    <p> Course & Yr: <?php echo $userDetails['course'] ?> - <?php echo $userDetails['year'] ?>  </p>
+    <p> Course & Yr: <?php echo $userDetails['course'] ?> - <?php echo $userDetails['yearlevel'] ?>  </p>
     <p><a href="logout.php">Logout</a></p>
     
     <center>

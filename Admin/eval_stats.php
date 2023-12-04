@@ -55,8 +55,8 @@
         echo '</center>';
 
 
-        if (isset($_POST['question_id'])) {
-            $questionId = $_POST['question_id'];
+        if (isset($_GET['question_id'])) {
+            $questionId = $_GET['question_id'];
         } else {
             $questionId = 1;
         }
@@ -79,47 +79,45 @@
                 </select>
             </form>
         </div>
-
         
         <?php
             $responsesForeachQuestion = $getRatings->GetRatingsForEachQuestion($eval_id, $questionId);
             echo $responsesForeachQuestion;
         ?>
         
-        
         <?php
-        $counter = 1; 
 
-        mysqli_data_seek($result, 0);
+        $counter = 1;
 
-        while ($row = mysqli_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_assoc($result)){
             echo "<br>";
             $currentQuestionId = $row['question_id'];
-            
+
             $questions = $getQuestions->GetQuestions($eval_id, $currentQuestionId);
 
             if (!empty($questions)) {
                 echo "$counter)  Question: " . $questions[0] . "<br>";
-            } else {
-                echo "$counter)  Question details not found. <br>";
+                $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
+                echo "Mean: " . number_format($mean, 4) . "<br>";
+
+                $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
+                echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
+
+                $median = $calculateMedian->calculateMedianForQuestion($currentQuestionId);
+                echo "Median: " . ($median !== null ? number_format($median, 2) : "No values") . "<br>";
+
+                $variance = $calculateVariance->calculateVarianceForQuestion($currentQuestionId);
+                echo "Variance: " . number_format($variance, 4) . "<br>";
+
+                $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($currentQuestionId);
+                echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
+
+                $counter++;
             }
-            
-            $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
-            echo "Mean: " . number_format($mean, 4) . "<br>";
 
-            $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
-            echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
-
-            $median = $calculateMedian->calculateMedianForQuestion($currentQuestionId);
-            echo "Median: " . ($median !== null ? number_format($median, 2) : "No values") . "<br>";
-
-            $variance = $calculateVariance->calculateVarianceForQuestion($currentQuestionId);
-            echo "Variance: " . number_format($variance, 4) . "<br>";
-
-            $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($currentQuestionId);
-            echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
-
-            $counter++;  
+            else{
+                echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>"; # PASS THE QUESTION SET ID FROM THE eval_list.php
+            }
         }
 
         ?>
@@ -127,6 +125,7 @@
         <?php
         mysqli_close($conn);
         }
+
         else
         {
             echo "Error: Evaluation ID not specified.";
