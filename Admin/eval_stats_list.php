@@ -1,6 +1,6 @@
 <?php
+require '../functions/database.php'; // Make sure to include the database connection file if needed
 require '../functions/get_eventname.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +17,8 @@ require '../functions/get_eventname.php';
         <thead>
             <tr>
                 <th>Event Name</th>
+                <!-- Add additional column headers if needed -->
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -24,16 +26,16 @@ require '../functions/get_eventname.php';
             while ($results = mysqli_fetch_array($sql_query)) {
             ?>
                 <tr>
-                    <td><?php echo $results['event_name'] ?></td>
+                    <td><?php echo $results['event_name']; ?></td>
                     <td>
-                        <a href="eval_stats.php?eval_id=<?php echo $results['eval_id']; ?>">View Stats</a> <!--PASS ALSO THE QUIESTIONSET ID -->
+                        <a href="eval_stats.php?eval_id=<?php echo $results['eval_id']; ?>">View Stats</a>
                     </td>
                 </tr>
             <?php
             }
             
             if (mysqli_num_rows($sql_query) === 0) {
-                echo '<tr><td colspan="4">No evaluations found</td></tr>';
+                echo '<tr><td colspan="2">No evaluations found</td></tr>';
             }
             ?>
         </tbody>

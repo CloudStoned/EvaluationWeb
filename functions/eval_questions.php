@@ -1,14 +1,24 @@
 <?php
 require '../functions/get_question_set.php';
 
-if (isset($_GET['eval_id'])) {
-    $eval_id = $_GET['eval_id'];
 
+if (isset($_GET['student_id'], $_GET['eval_id'])) {
+    $eval_id = $_GET['eval_id'];
+    $student_id = $_GET['student_id'];
+
+    $check_query = "SELECT * FROM answers WHERE eval_id = $eval_id AND student_id = $student_id";
+    $check_result = mysqli_query($conn, $check_query);
+
+    if (mysqli_num_rows($check_result) > 0) {
+        echo  "You already Answered This Survey";
+        echo '<br> <a href="../Users/evaluation.php" class="go-back-button">Go Back</a>';
+        exit();
+    }
+    
     $question_set_query = mysqli_query($conn, "SELECT * FROM questions WHERE question_set_fk = $eval_id");
 
     if ($question_set_query) {
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,6 +89,6 @@ if (isset($_GET['eval_id'])) {
     }
 } 
 else {
-    echo "Error: eval_id not specified.";
+    die("Error: student_id or eval_id not specified.");
 }
 ?>

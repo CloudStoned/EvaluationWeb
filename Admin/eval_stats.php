@@ -33,6 +33,7 @@
     if (isset($_GET['eval_id'])) 
     {
         $eval_id = $_GET['eval_id'];
+      
         
         $query = "SELECT DISTINCT question_id FROM answers WHERE eval_id = $eval_id";
         $result = mysqli_query($conn, $query);

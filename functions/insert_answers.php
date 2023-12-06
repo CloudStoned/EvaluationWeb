@@ -21,35 +21,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $check_query = "SELECT * FROM answers WHERE eval_id = $eval_id AND student_id = $student_id";
     $check_result = mysqli_query($conn, $check_query);
 
-    if (mysqli_num_rows($check_result) > 0) {
+    $date_answered = date("Y-m-d");
 
-        echo "You have already answered for this evaluation.";
+    foreach ($_POST as $key => $value) {
+        if (strpos($key, 'answer_') === 0) {
+            $question_id = str_replace('answer_', '', $key);
 
-    } else {
-        $date_answered = date("Y-m-d");
+            $answer_value = $value;
 
-        foreach ($_POST as $key => $value) {
-            if (strpos($key, 'answer_') === 0) {
-                $question_id = str_replace('answer_', '', $key);
+            $insert_query = "INSERT INTO answers (eval_id, student_id, question_id, answer_value, date_answered) 
+                                VALUES ($eval_id, $student_id, $question_id, $answer_value, '$date_answered')";
 
-                $answer_value = $value;
+            $insert_result = mysqli_query($conn, $insert_query);
 
-                $insert_query = "INSERT INTO answers (eval_id, student_id, question_id, answer_value, date_answered) 
-                                 VALUES ($eval_id, $student_id, $question_id, $answer_value, '$date_answered')";
-
-                $insert_result = mysqli_query($conn, $insert_query);
-
-                if (!$insert_result) {
-                    die("Insert Error: " . mysqli_error($conn));
-                }
+            if (!$insert_result) {
+                die("Insert Error: " . mysqli_error($conn));
             }
         }
-
-        echo "Answers submitted successfully.";
     }
 
-    // Provide a link to go back
+    echo "Answers submitted successfully.";
     echo '<a href="../Users/evaluation.php" class="go-back-button">Go Back</a>';
+    
 } else {
     echo "Invalid request.";
 }

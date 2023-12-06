@@ -3,12 +3,19 @@ require '../functions/get_eventname.php';
 
 session_start();
 
-if(isset($_SESSION['userDetails'])) {
+if (isset($_SESSION['userDetails'])) {
     $userDetails = $_SESSION['userDetails'];
-} 
-else {
+} else {
     header("Location: index.php");
     exit();
+}
+
+// Check if there is a message
+if (isset($_GET['message'])) {
+    $message = $_GET['message'];
+    if ($message == 'already_answered') {
+        echo "You have already answered for this evaluation.";
+    }
 }
 ?>
 
@@ -45,7 +52,7 @@ else {
                         <td><?php echo $results['event_name'] ?></td>
                         <td><?php echo $results['date_created'] ?></td>
                         <td>
-                            <a href="../functions/eval_questions.php?eval_id=<?php echo $results['eval_id']; ?>">Answer Evaluation</a>
+                            <a href="../functions/eval_questions.php?eval_id=<?php echo $results['eval_id']; ?>&student_id=<?php echo $userDetails['student_id']; ?>">Answer Evaluation</a>
                         </td>   
                     </tr>
                 <?php
