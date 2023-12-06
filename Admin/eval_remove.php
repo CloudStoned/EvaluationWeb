@@ -11,15 +11,13 @@ if(isset($_GET['eval_id'])) {
 
         echo '<script>alert("Evaluation removed successfully.");</script>';
     } else {
-        // Deletion failed
         echo '<script>alert("Error removing evaluation: ' . mysqli_error($conn) . '");</script>';
     }
 } else {
-    // Redirect to the index page if eval_id is not set
     header("Location: index.php");
     exit();
 }
-
+    
 header("Location: index.php");
 exit();
 ?>

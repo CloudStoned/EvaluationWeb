@@ -19,6 +19,7 @@
               <a class="nav-item nav-link" href="eval_details.php">Evaluation Details</a>
               <a class="nav-item nav-link" href="eval_stats_list.php">Statistical Report</a>  
               <a class="nav-item nav-link" href="../Users/create_admin.php">Create Admin Account</a>  
+              <a class="nav-item nav-link" href="#">Archive Evals</a>  
               <p><a href="../Users/logout.php">Logout</a></p>
           </div>
         </div>

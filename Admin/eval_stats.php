@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluation Statistics</title>
     <link rel="stylesheet" href="../Admin/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -48,20 +49,46 @@
         </center>';
 
         $respondents = $countRespondents->GetRespondentsForCourses($eval_id);
-        echo '<center>
-                <h2> Total Respondents per Course: </h2>';
-        foreach ($respondents as $row) {
-            echo '<p>' . $row["course"] . ': ' . $row["student_count"] . '</p>';
-        }
-        echo '</center>';
+        ?>
+
+        <canvas id="responsesChart" width="800" height="200"></canvas>
 
 
+        <script>
+            var ctx = document.getElementById('responsesChart').getContext('2d');
+            var responsesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: <?php echo json_encode(array_column($respondents, 'course')); ?>,
+                    datasets: [{
+                        label: 'Respondents Per Course',
+                        data: <?php echo json_encode(array_column($respondents, 'student_count')); ?>,
+                        backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+
+
+        
+
+        <?php
         if (isset($_GET['question_id'])) {
             $questionId = $_GET['question_id'];
         } else {
             $questionId = 1;
         }
         ?>
+
 
         <div class="dropDownList">
             <form method="post" action="">
