@@ -14,7 +14,7 @@
 </head>
 <body>
     <center>
-    <form method="post" action="../functions/insert_data.php">
+    <form method="post" action="../functions/eval_validate.php">
 
         <label for="event_name">Event Name:</label>
         <input type="text" name="event_name" required><br>
@@ -25,16 +25,17 @@
         <div id="questions-container">
             <div class="question-input">
                 <label for="questions[]">Question 1:</label>
-                <input type="text" name="questions[]" required>
+                <input type="text" name="questions[]" required style="width: 300px;" >
                 <button type="button" class="remove-question">Remove</button>
             </div>
         </div>
 
         <button type="button" id="add-question">Add Question</button>
+        <button type="button" class="remove-question clear-all-questions">Clear All</button>
 
         <br>
         <br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Next">
         <a href="index.php" class="go-back-button">Go Back</a>
 
     </form>
@@ -46,7 +47,7 @@
                 var questionNumber = $(".question-input").length + 1;
                 var newQuestion = '<div class="question-input">' +
                     '<label for="questions[]">Question ' + questionNumber + ':</label>' +
-                    '<input type="text" name="questions[]" required>' +
+                    '<input type="text" name="questions[]" required style="width: 300px">' +
                     '<button type="button" class="remove-question">Remove</button>' +
                     '</div>';
 
@@ -58,6 +59,14 @@
                 $(this).parent().remove();
                 updateQuestionNumbers();
             });
+
+            $(".clear-all-questions").click(function () {
+                var confirmClear = confirm("Are you sure you want to clear all questions?");
+                if (confirmClear) {
+                    $("#questions-container").empty();
+                    updateQuestionNumbers();
+                }
+            });            
 
             // Update question numbers when removing a question
             function updateQuestionNumbers() {

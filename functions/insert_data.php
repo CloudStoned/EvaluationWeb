@@ -12,9 +12,9 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") 
     {
-        $event_name = mysqli_real_escape_string($conn, $_POST['event_name']);
-        $date_created = mysqli_real_escape_string($conn, $_POST['date_created']);
-        $questions = $_POST['questions'];
+        $event_name = isset($_POST['event_name']) ? mysqli_real_escape_string($conn, $_POST['event_name']) : '';
+        $date_created = isset($_POST['date_created']) ? mysqli_real_escape_string($conn, $_POST['date_created']) : '';
+        $questions = isset($_POST['questions']) ? unserialize($_POST['questions']) : [];
 
         $sql_event = "INSERT INTO school_event (event_name, date_created) VALUES (?, ?)";
         $sql_questionset = "INSERT INTO questionset (event_id) VALUES (?)";

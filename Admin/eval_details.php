@@ -17,7 +17,6 @@ require '../functions/get_eventname.php';
         <thead>
             <tr>
                 <th>Eval ID</th>
-                <th>Author</th>
                 <th>Event Name</th>
                 <th>Date Created</th>
             </tr>
