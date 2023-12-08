@@ -6,7 +6,7 @@ if (!$conn) {
 }
 
 
-$sql = "SELECT evaluation.eval_id, evaluation.event_id, school_event.event_name, school_event.date_created
+$sql = "SELECT evaluation.eval_id, evaluation.event_id, evaluation.question_set_id, school_event.event_name, school_event.date_created
         FROM evaluation
         JOIN school_event ON evaluation.event_id = school_event.event_id";
 

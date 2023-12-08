@@ -31,14 +31,20 @@
     $getQuestions = new Questions($conn);
     $getRatings = new Ratings($conn);
   
-    if (isset($_GET['eval_id'])) 
+    if (isset($_GET['eval_id']) && isset($_GET['question_set_id'])) {
     {
         $eval_id = $_GET['eval_id'];
-      
+        $question_set_id = $_GET['question_set_id'];
         
-        $query = "SELECT DISTINCT question_id FROM answers WHERE eval_id = $eval_id";
+        $query = "SELECT q.question_id, q.question
+                FROM evaluation AS e
+                JOIN questions AS q ON e.question_set_id = q.question_set_fk
+                WHERE e.eval_id = $eval_id AND e.question_set_id = $question_set_id;
+                ";
+
         $result = mysqli_query($conn, $query);
-        
+
+
         if (!$result) {
             die("Error: " . mysqli_error($conn));
         }
@@ -78,9 +84,6 @@
             });
         </script>
 
-
-        
-
         <?php
         if (isset($_GET['question_id'])) {
             $questionId = $_GET['question_id'];
@@ -88,8 +91,7 @@
             $questionId = 1;
         }
         ?>
-
-
+        
         <div class="dropDownList">
             <form method="post" action="">
                 <label for="questionDropdown">Select Question: </label>
@@ -120,11 +122,12 @@
         while ($row = mysqli_fetch_assoc($result)){
             echo "<br>";
             $currentQuestionId = $row['question_id'];
+            $questionText = $row['question'];
 
             $questions = $getQuestions->GetQuestions($eval_id, $currentQuestionId);
 
             if (!empty($questions)) {
-                echo "$counter)  Question: " . $questions[0] . "<br>";
+                echo "$counter)  Question: " . $questionText . "<br>";
                 $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
                 echo "Mean: " . number_format($mean, 4) . "<br>";
 
@@ -144,20 +147,19 @@
             }
 
             else{
-                echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>"; # PASS THE QUESTION SET ID FROM THE eval_list.php
+                echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>"; 
             }
         }
 
         ?>
             <a href="eval_stats_list.php" class="go-back-button">Go Back</a>
         <?php
-        mysqli_close($conn);
+            mysqli_close($conn);
         }
 
-        else
-        {
-            echo "Error: Evaluation ID not specified.";
-        }
+    } else {
+        echo "Error: Evaluation ID or Question Set ID not specified.";
+    }
     ?>
 </body>
 </html>

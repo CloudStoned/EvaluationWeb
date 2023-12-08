@@ -28,7 +28,18 @@ require '../functions/get_eventname.php';
                 <tr>
                     <td><?php echo $results['event_name']; ?></td>
                     <td>
-                        <a href="eval_stats.php?eval_id=<?php echo $results['eval_id']; ?>">View Stats</a>
+                        <?php
+                        if (isset($results['eval_id']) && isset($results['question_set_id'])) {
+                            $eval_id = $results['eval_id'];
+                            $question_set_id = $results['question_set_id'];
+                            ?>
+                            <a href="eval_stats.php?eval_id=<?php echo $eval_id; ?>&question_set_id=<?php echo $question_set_id; ?>">View Stats</a>
+                        <?php
+                        } else {
+                        
+                            echo "Error: Missing eval_id or question_set_id";
+                        }
+                        ?>
                     </td>
                 </tr>
             <?php
