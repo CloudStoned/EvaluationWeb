@@ -29,9 +29,9 @@
             <p>Date Created: <span id='dateCreated'><?= $date_created ?></span> <button type="button" onclick='editField("dateCreated")'>Edit</button></p>
     
             <?php
-            foreach ($questions as $index => $question) {
-                echo "<p>Question " . ($index + 1) . ": <span id='question_$index'>$question</span> <button type='button' onclick='editQuestion(\"question_$index\")'>Edit</button></p>";
-            }
+                foreach ($questions as $index => $question) {
+                    echo "<p>Question " . ($index + 1) . ": <span id='question_$index'>$question</span> <button type='button' onclick='editQuestion(\"question_$index\")'>Edit</button> <button type='button' onclick='removeQuestion(\"question_$index\")'>Remove</button></p>";
+                }
             ?>
     
             <input type="submit" value="Submit">
@@ -44,36 +44,7 @@
     mysqli_close($conn);
     ?>
     
-    <script>
-        function editEventName() {
-            var eventNameElement = document.getElementById('eventName');
-            var eventName = prompt("Enter new event name:", eventNameElement.innerText);
-
-            if (eventName !== null) {
-                eventNameElement.innerText = eventName;
-            }
-        }
-
-        function editField(fieldId) {
-            var fieldElement = document.getElementById(fieldId);
-            var fieldValue = prompt("Enter new value:", fieldElement.innerText);
-
-            if (fieldValue !== null) {
-                fieldElement.innerText = fieldValue;
-            }
-        }
-
-        function editQuestion(fieldId) {
-            var fieldElement = document.getElementById(fieldId);
-            var fieldValue = prompt("Enter new value:", fieldElement.innerText);
-
-            if (fieldValue !== null) {
-                fieldElement.innerText = fieldValue;
-            }
-        }
-
-
-    </script>
+    <script src="../js/eval_validate.js"></script>
 
 </body>
 </html>
