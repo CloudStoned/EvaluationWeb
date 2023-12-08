@@ -45,6 +45,7 @@ class Ratings
             if ($result->num_rows > 0) {
                 echo "<table border='1'>
                         <thead>
+                                <th>Number</th>
                                 <th>Courses</th>
                                 <th>Rating 1</th>
                                 <th>Rating 2</th>
@@ -54,9 +55,12 @@ class Ratings
                             </tr>
                         </thead>
                         <tbody>";
-        
+
+                $counter = 1;
+
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
+                            <td>{$counter}</td>
                             <td>{$row['course']}</td>
                             <td>{$row['Rating_1']}</td>
                             <td>{$row['Rating_2']}</td>
@@ -64,6 +68,7 @@ class Ratings
                             <td>{$row['Rating_4']}</td>
                             <td>{$row['Rating_5']}</td>
                         </tr>";
+                        $counter++;
                 }
         
                 echo "</tbody></table>";

@@ -58,8 +58,6 @@
         ?>
 
         <canvas id="responsesChart" width="800" height="200"></canvas>
-
-
         <script>
             var ctx = document.getElementById('responsesChart').getContext('2d');
             var responsesChart = new Chart(ctx, {
@@ -84,36 +82,42 @@
             });
         </script>
 
-        <?php
-        if (isset($_GET['question_id'])) {
-            $questionId = $_GET['question_id'];
-        } else {
-            $questionId = 1;
-        }
-        ?>
-        
         <div class="dropDownList">
             <form method="post" action="">
                 <label for="questionDropdown">Select Question: </label>
                 <select id="questionDropdown" name="question_id" onchange="this.form.submit()">
                     <?php
-                    $questionResult = $getQuestions->GetQuestionsForDropDown($eval_id);
-                    while ($row = mysqli_fetch_assoc($questionResult)) {
-                        $qid = $row['question_id'];
-                        $questionText = $row['question'];
-                        echo "<option value=\"$qid\"";
-                        if ($questionId == $qid) echo " selected";
-                        echo ">$questionText</option>";
-                    }
+                        $questionId = isset($_POST['question_id']) ? $_POST['question_id'] : 1;
+                        $questionText = ""; 
+
+                        $questionResult = $getQuestions->GetQuestionsForDropDown($eval_id);
+                        while ($row = mysqli_fetch_assoc($questionResult)) {
+                            $qid = $row['question_id'];
+
+                            if ($questionId == $qid) {
+                                $questionText = $row['question'];
+                            }
+
+                            echo "<option value=\"$qid\"";
+                            if ($questionId == $qid) {
+                                echo " selected";
+                            }
+                            
+                            echo ">{$row['question']}</option>";
+                        }
                     ?>
                 </select>
             </form>
         </div>
-        
+
         <?php
+            echo "Selected Question Text: " . $questionText;
             $responsesForeachQuestion = $getRatings->GetRatingsForEachQuestion($eval_id, $questionId);
             echo $responsesForeachQuestion;
         ?>
+
+
+
         
         <?php
 
