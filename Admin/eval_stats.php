@@ -31,7 +31,7 @@
     $calculateStandardDev = new CalculateStandardDev($conn, $calculateVariance);
     $getQuestions = new Questions($conn);
     $getRatings = new Ratings($conn);
-    $getConclusion = new Conclusion($conn, $calculateMean, $calculateMedian);
+    $getConclusion = new Conclusion($conn);
   
     if (isset($_GET['eval_id']) && isset($_GET['question_set_id'])) {
     {
@@ -135,6 +135,7 @@
             $counter = 1;
             $sumOfMeans = 0;
             $sumOfMedians = 0;
+            $sumOfVariance = 0;
             $medianValues = [];
             $modeValues = [];
 
@@ -163,6 +164,7 @@
 
                     $variance = $calculateVariance->calculateVarianceForQuestion($currentQuestionId);
                     echo "Variance: " . number_format($variance, 4) . "<br>";
+                    $sumOfVariance += $variance;
 
                     $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($currentQuestionId);
                     echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
@@ -170,8 +172,10 @@
                     $meanConclusion = $getConclusion->GetMeanConclusion($sumOfMeans, $sumOfMedians);
                     $medianConclusion = $getConclusion->GetMedianConclusion($medianValues); 
                     $modeConclusion = $getConclusion->GetModeConclusion($modeValues);
-
+                    $varianceConclusion = $getConclusion->GetVariabilityConclusion($sumOfMeans, $sumOfVariance);
+                    
                     $counter++;
+
                 } else {
                     echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>";
                 }
@@ -184,7 +188,7 @@
             <br>
             Mode: $modeConclusion
             <br>
-            Variability:
+            Variability: $varianceConclusion
             </center>";    
             ?>
 

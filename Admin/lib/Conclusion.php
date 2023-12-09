@@ -3,15 +3,6 @@ require '../functions/database.php';
 
 class Conclusion
 {
-    private $conn;
-    private $calculateMean;
-    private $calculateMedian;
-
-    public function __construct($conn, CalculateMean $calculateMean, CalculateMedian $calculateMedian){
-        $this->conn = $conn;
-        $this->calculateMean = $calculateMean;
-        $this->calculateMedian = $calculateMedian;
-    }
 
     public function GetMeanConclusion($mean, $median){
         $meanConclusion = "";
@@ -85,7 +76,20 @@ class Conclusion
         return $modeConclusion;
     }
     
-    
+    public function GetVariabilityConclusion($mean, $variance){
+
+        $variabilityConclusion = "";
+        if($variance <= $mean){	
+            $variabilityConclusion = "suggests that the spread of responses in the data or survey is low to moderate in most questions.";
+        }
+            
+        else if ($variance > $mean){
+            $variabilityConclusion = "suggests that the spread of responses in the data or survey is high.";
+        }
+
+        return $variabilityConclusion;
+            
+    }
     
     
 
