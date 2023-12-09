@@ -132,64 +132,59 @@
          
         </center>
         <?php
+            $counter = 1;
+            $sumOfMeans = 0;
+            $sumOfMedians = 0;
+            $medianValues = [];
+            $meanConclusion = "";
+            $medianConclusion = "";
 
-        $counter = 1;
-        $sumOfMeans = 0;
-        $sumOfMedians = 0;
-        $medianValues = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<br>";
+                $currentQuestionId = $row['question_id'];
+                $questionText = $row['question'];
 
-        while ($row = mysqli_fetch_assoc($result))
-        {
-            echo "<br>";
-            $currentQuestionId = $row['question_id'];
-            $questionText = $row['question'];
+                $questions = $getQuestions->GetQuestions($eval_id, $currentQuestionId);
 
-            $questions = $getQuestions->GetQuestions($eval_id, $currentQuestionId);
+                if (!empty($questions)) {
+                    echo "<center> $counter) Question: " . $questionText . "<br>";
+                    $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
+                    $sumOfMeans += $mean;
+                    echo "Mean: " . number_format($mean, 4) . " <br>";
 
-            if (!empty($questions)) 
-            {
-                echo "<center> $counter) Question: " . $questionText . "<br>";
-                $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
-                $sumOfMeans += $mean;
-                echo "Mean: " . number_format($mean, 4) . " <br>";
+                    $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
+                    echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
 
-                $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
-                echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
+                    $median = $calculateMedian->calculateMedianForQuestion($currentQuestionId);
+                    $medianValues[] = $median;
+                    $sumOfMedians += $median;
+                    echo "Median: " . ($median !== null ? number_format($median, 2) : "No values") . "<br>";
 
-                $median = $calculateMedian->calculateMedianForQuestion($currentQuestionId);
-                $medianValues[] = $median;  
-                $sumOfMedians += $median;
-                echo "Median: " . ($median !== null ? number_format($median, 2) : "No values") . "<br>";
+                    $variance = $calculateVariance->calculateVarianceForQuestion($currentQuestionId);
+                    echo "Variance: " . number_format($variance, 4) . "<br>";
 
-                $variance = $calculateVariance->calculateVarianceForQuestion($currentQuestionId);
-                echo "Variance: " . number_format($variance, 4) . "<br>";
-        
-                $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($currentQuestionId);
-                echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
+                    $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($currentQuestionId);
+                    echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
 
-                $meanConclusion = $getConclusion->GetMeanConclusion($sumOfMeans,$sumOfMedians);
-                $medianConclusion = $getConclusion->GetMedianConclusion($medianValues);
-                
-                $counter++;
+                    $meanConclusion = $getConclusion->GetMeanConclusion($sumOfMeans, $sumOfMedians);
+                    $medianConclusion = $getConclusion->GetMedianConclusion($medianValues); 
+                    $counter++;
+                } else {
+                    echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>";
+                }
             }
-    
-            else {
-                echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>"; 
-            }
-        }
 
-        echo "<h2>Conclusion:</h2> 
-        Mean: $meanConclusion
-        <br>
-        Median: $medianConclusion
-        <br>
-        Mode:
-        <br>
-        Variability:
-        </center>";
-  
+            echo "<h2>Conclusion:</h2> 
+            Mean: $meanConclusion
+            <br>
+            Median: $medianConclusion
+            <br>
+            Mode:
+            <br>
+            Variability:
+            </center>";    
+            ?>
 
-        ?>
         <center>
             <br>
             <a href="eval_stats_list.php" class="go-back-button">Go Back</a>
@@ -198,7 +193,9 @@
             mysqli_close($conn);
         }
 
-    } else {
+    } 
+
+    else {
         echo "Error: Evaluation ID or Question Set ID not specified.";
     }
     ?>

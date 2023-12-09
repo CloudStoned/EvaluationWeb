@@ -37,32 +37,42 @@ class Conclusion
         return $meanConclusion;
     }
     
-
-    public function GetMedianConclusion($medianValues){
+    public function GetMedianConclusion($medianValues) {
         $medianConclusion = "";
     
-        if (count(array_unique($medianValues)) === count($medianValues)) 
-        {
+        $uniqueValues = array_unique($medianValues);
+    
+        if (count($uniqueValues) === 1) {
             $medianConclusion = "On each question, they have the same median";
         } 
 
-        else 
-        {
-            $uniqueValues = array_unique($medianValues);
+        elseif (count($uniqueValues) === count($medianValues)) {
+            $medianConclusion = "On each question, there's a different median";
+        } 
+
+        else {
+            $differentMedianQuestion = 0;
     
-            foreach ($uniqueValues as $value) 
-            {
+            foreach ($uniqueValues as $value) {
                 $count = array_count_values($medianValues)[$value];
-                if ($count === 1) 
-                {
-                    $questionNumber = array_search($value, $medianValues) + 1;
-                    $medianConclusion = "It suggests that the only question that has a different median is q$questionNumber.";
+    
+                if ($count === 1) {
+                    $differentMedianQuestion = array_search($value, $medianValues) + 1;
+                    break;
                 }
+            }
+    
+            if ($differentMedianQuestion > 0) {
+                $medianConclusion = "It suggests that the only question that has a different median is question no. $differentMedianQuestion.";
             }
         }
     
         return $medianConclusion;
     }
+    
+    
+    
+    
     
 
 }
