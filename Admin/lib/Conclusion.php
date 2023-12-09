@@ -7,8 +7,7 @@ class Conclusion
     private $calculateMean;
     private $calculateMedian;
 
-    public function __construct($conn, CalculateMean $calculateMean, CalculateMedian $calculateMedian)
-    {
+    public function __construct($conn, CalculateMean $calculateMean, CalculateMedian $calculateMedian){
         $this->conn = $conn;
         $this->calculateMean = $calculateMean;
         $this->calculateMedian = $calculateMedian;
@@ -46,7 +45,7 @@ class Conclusion
             $medianConclusion = "On each question, they have the same median";
         } 
 
-        elseif (count($uniqueValues) === count($medianValues)) {
+        elseif (count($uniqueValues) !== count($medianValues)) {
             $medianConclusion = "On each question, there's a different median";
         } 
 
@@ -70,6 +69,21 @@ class Conclusion
         return $medianConclusion;
     }
     
+    public function GetModeConclusion($modeValues) {
+        $modeConclusion = "";
+    
+        $uniqueValues = array_unique($modeValues);
+        
+        if (count($uniqueValues) === 1) {
+            $modeConclusion = "On each question, they have the same most common responses";
+        } 
+        
+        elseif (count($uniqueValues) !== count($modeValues)) {
+            $modeConclusion = "On each question, there's a different favorable responses";
+        }
+    
+        return $modeConclusion;
+    }
     
     
     

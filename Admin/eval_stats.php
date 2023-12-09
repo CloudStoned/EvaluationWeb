@@ -136,8 +136,8 @@
             $sumOfMeans = 0;
             $sumOfMedians = 0;
             $medianValues = [];
-            $meanConclusion = "";
-            $medianConclusion = "";
+            $modeValues = [];
+
 
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<br>";
@@ -154,6 +154,7 @@
 
                     $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
                     echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
+                    $modeValues[] = $mode;
 
                     $median = $calculateMedian->calculateMedianForQuestion($currentQuestionId);
                     $medianValues[] = $median;
@@ -168,6 +169,8 @@
 
                     $meanConclusion = $getConclusion->GetMeanConclusion($sumOfMeans, $sumOfMedians);
                     $medianConclusion = $getConclusion->GetMedianConclusion($medianValues); 
+                    $modeConclusion = $getConclusion->GetModeConclusion($modeValues);
+
                     $counter++;
                 } else {
                     echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>";
@@ -179,7 +182,7 @@
             <br>
             Median: $medianConclusion
             <br>
-            Mode:
+            Mode: $modeConclusion
             <br>
             Variability:
             </center>";    
