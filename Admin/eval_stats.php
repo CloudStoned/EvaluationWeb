@@ -20,6 +20,7 @@
     require 'lib/Respondents.php';
     require 'lib/Questions.php';
     require 'lib/Ratings.php';
+    require 'lib/Conclusion.php';
     
     $calculateMean = new CalculateMean($conn);
     $calculateMode = new CalculateMode($conn);
@@ -30,6 +31,7 @@
     $calculateStandardDev = new CalculateStandardDev($conn, $calculateVariance);
     $getQuestions = new Questions($conn);
     $getRatings = new Ratings($conn);
+    $getConclusion = new Conclusion($conn, $calculateMean, $calculateMedian);
   
     if (isset($_GET['eval_id']) && isset($_GET['question_set_id'])) {
     {
@@ -132,43 +134,66 @@
         <?php
 
         $counter = 1;
-        
-        while ($row = mysqli_fetch_assoc($result)){
+        $sumOfMeans = 0;
+        $sumOfMedians = 0;
+        $medianValues = [];
+
+        while ($row = mysqli_fetch_assoc($result))
+        {
             echo "<br>";
             $currentQuestionId = $row['question_id'];
             $questionText = $row['question'];
 
             $questions = $getQuestions->GetQuestions($eval_id, $currentQuestionId);
 
-            if (!empty($questions)) {
-                echo "$counter)  Question: " . $questionText . "<br>";
+            if (!empty($questions)) 
+            {
+                echo "<center> $counter) Question: " . $questionText . "<br>";
                 $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
+                $sumOfMeans += $mean;
                 echo "Mean: " . number_format($mean, 4) . " <br>";
 
                 $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
                 echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
 
                 $median = $calculateMedian->calculateMedianForQuestion($currentQuestionId);
+                $medianValues[] = $median;  
+                $sumOfMedians += $median;
                 echo "Median: " . ($median !== null ? number_format($median, 2) : "No values") . "<br>";
 
                 $variance = $calculateVariance->calculateVarianceForQuestion($currentQuestionId);
                 echo "Variance: " . number_format($variance, 4) . "<br>";
-
+        
                 $standardDev = $calculateStandardDev->calculateStandardDeviationForQuestion($currentQuestionId);
                 echo "Standard Deviation: " . number_format($standardDev, 4) . "<br>";
 
+                $meanConclusion = $getConclusion->GetMeanConclusion($sumOfMeans,$sumOfMedians);
+                $medianConclusion = $getConclusion->GetMedianConclusion($medianValues);
+                
                 $counter++;
             }
-            
-            else{
+    
+            else {
                 echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>"; 
             }
         }
 
-        echo "<br> <h1>Conclusion: YUNG SINULAT MO <br> </h1>";
+        echo "<h2>Conclusion:</h2> 
+        Mean: $meanConclusion
+        <br>
+        Median: $medianConclusion
+        <br>
+        Mode:
+        <br>
+        Variability:
+        </center>";
+  
 
         ?>
+        <center>
+            <br>
             <a href="eval_stats_list.php" class="go-back-button">Go Back</a>
+        </center>
         <?php
             mysqli_close($conn);
         }
