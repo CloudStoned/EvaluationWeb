@@ -1,5 +1,5 @@
 <?php
-require '../functions/database.php'; // Make sure to include the database connection file if needed
+require '../functions/database.php'; 
 require '../functions/get_eventname.php';
 ?>
 
@@ -17,7 +17,6 @@ require '../functions/get_eventname.php';
         <thead>
             <tr>
                 <th>Event Name</th>
-                <!-- Add additional column headers if needed -->
                 <th>Action</th>
             </tr>
         </thead>

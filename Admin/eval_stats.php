@@ -117,12 +117,22 @@
         ?>
 
 
+        <center>
+            <h1> Mean Levels </h1>
+            <h2> Low Mean - mean is < median  </h2>
+            <h2> Moderate Mean - mean is <= median  </h2>
+            <h2> High Mean - mean is > median  </h2>
 
-        
+            <br>
+            <h1> Variability Levels </h1>
+            <h2> Low to Moderate - var is <= mean   </h2>
+            <h2> High - var is > mean   </h2>
+         
+        </center>
         <?php
 
         $counter = 1;
-
+        
         while ($row = mysqli_fetch_assoc($result)){
             echo "<br>";
             $currentQuestionId = $row['question_id'];
@@ -133,7 +143,7 @@
             if (!empty($questions)) {
                 echo "$counter)  Question: " . $questionText . "<br>";
                 $mean = $calculateMean->calculateMeanForQuestion($currentQuestionId);
-                echo "Mean: " . number_format($mean, 4) . "<br>";
+                echo "Mean: " . number_format($mean, 4) . " <br>";
 
                 $mode = $calculateMode->calculateModeForQuestion($currentQuestionId);
                 echo "Mode: " . ($mode !== null ? $mode : "No mode") . "<br>";
@@ -149,11 +159,13 @@
 
                 $counter++;
             }
-
+            
             else{
                 echo "Error: Question Not Found. Eval ID: $eval_id, Question ID: $currentQuestionId <br>"; 
             }
         }
+
+        echo "<br> <h1>Conclusion: YUNG SINULAT MO <br> </h1>";
 
         ?>
             <a href="eval_stats_list.php" class="go-back-button">Go Back</a>

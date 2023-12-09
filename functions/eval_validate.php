@@ -30,7 +30,7 @@
     
             <?php
                 foreach ($questions as $index => $question) {
-                    echo "<p>Question " . ($index + 1) . ": <span id='question_$index'>$question</span> <button type='button' onclick='editQuestion(\"question_$index\")'>Edit</button> <button type='button' onclick='removeQuestion(\"question_$index\")'>Remove</button></p>";
+                    echo "<p>Question " . ($index + 1) . ": <span id='question_$index'>$question</span> <button type='button' onclick='editQuestion(\"question_$index\")'>Edit</button>";
                 }
             ?>
     
